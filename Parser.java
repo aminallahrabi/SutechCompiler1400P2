@@ -47,22 +47,24 @@ public class Parser {
     public void parse() {
         for (int i = 0; i < tokens.size(); i++) {
             if (tokens.get(i).type.equals(Tokens.T_EQ)) {
-                if (tokens.get(i - 2).value.equals("int")) {
+                       
+                if (tokens.get(i - 1).type.equals("integer")) {
                     String expression = "";
                     int index = i;
+                    index++;
                     while (!tokens.get(index).type.equals(Tokens.T_ENDCOMMAND)) {
-                        index++;
                         if (tokens.get(index).value.equals("")) {
                             expression += tokens.get(index).type;
                         } else {
                             expression += tokens.get(index).value;
                         }
+                        index++;
                     }
                     String r = String.valueOf(EvaluateString.evaluate(expression));
                     ErrorHandler.symbolTable.put(tokens.get(i - 1).value, r);
                     out.println(ErrorHandler.symbolTable.get(tokens.get(i - 1).value));
 
-                } else if (tokens.get(i - 2).value.equals("String")) {
+                } else if (tokens.get(i - 1).type.equals("String")) {
                     String value = "";
                     int index = i;
                     while (!tokens.get(index).type.equals(Tokens.T_ENDCOMMAND)) {
@@ -71,18 +73,17 @@ public class Parser {
                             index++;
                             value = value.concat(tokens.get(index).value);
 
-                        }
-                        else{
-                            
-                        value += tokens.get(index).value;
+                        } else {
+
+                            value += tokens.get(index).value;
                         }
                     }
                     ErrorHandler.symbolTable.put(tokens.get(i - 1).value, value);
 
-                } else if (tokens.get(i - 2).value.equals("Boolean")) {
+                } else if (tokens.get(i - 1).type.equals("Boolean")) {
                     String value = tokens.get(i + 1).value;
                     ErrorHandler.symbolTable.put(tokens.get(i - 1).value, value);
-                } else if (tokens.get(i - 2).value.equals("float")) {
+                } else if (tokens.get(i - 1).type.equals("float")) {
                     String value = tokens.get(i + 1).value;
                     ErrorHandler.symbolTable.put(tokens.get(i - 1).value, value);
                 }

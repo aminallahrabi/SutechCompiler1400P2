@@ -18,7 +18,7 @@ public class Compiler {
      */
     public static void main(String[] args) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("E:\\project\\JAVA-project\\compiler2\\test\\tests\\input1.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("E:\\project\\JAVA-project\\compiler2\\test\\tests\\input4.txt"));
             int c;
             String text = "";
             while ((c = br.read()) != -1) {

@@ -18,7 +18,7 @@ public class ErrorHandler {
     int paranthes = 0;
     public static int totalKeywords = 0;
     public static int totalParantheses = 0;
-    public static HashMap<String, String> symbolTable = new HashMap<String, String>();
+    public static HashMap<String, String > symbolTable = new HashMap<String, String >();
     public static boolean hasError = false;
 ////////////////////////////////////////////////////////////////////////
 
@@ -299,7 +299,14 @@ public class ErrorHandler {
     public void checkIdentifier(int i) {
         int index = i;
         if ((tokens.get(index - 1).value.equals("int")) || (tokens.get(index - 1).value.equals("String")) || (tokens.get(index - 1).value.equals("Boolean")) || (tokens.get(index - 1).value.equals("void"))) {
-            symbolTable.put(tokens.get(index).value, " ");
+            switch(tokens.get(index - 1).value){
+                case "int":tokens.get(index).type = "integer";break;
+                case "String":tokens.get(index).type = "String";break;
+                case "Boolean":tokens.get(index).type = "Boolean";break;
+                case "void":tokens.get(index).type = "function";break;
+            }
+            tokens.add(index, tokens.get(index));
+            symbolTable.put(tokens.get(index).value,tokens.get(index).type );
 
         } else {
             if (!(symbolTable.containsKey(tokens.get(index).value))) {
@@ -309,7 +316,15 @@ public class ErrorHandler {
                 out.println("------------------------------------------|");
 
             }
+            else{
+                tokens.get(index).type = symbolTable.get(tokens.get(index).value);
+            }
         }
+    }
+//////////////////////////////////////////////////////////////////////////
+    public void checkINTEGER(int i){
+        int index = i;
+
     }
 ////////////////////////////////////////////////////////////////////
 
@@ -334,7 +349,8 @@ public class ErrorHandler {
                     totalKeywords += 1;
                     totalParantheses += 1;
 
-                } else {
+                } else if((tokens.get(i).value.equals("INTEGER"))){
+                    checkINTEGER(i);
 
                 }
             } else if (tokens.get(i).type.equals(Tokens.T_IDENTIFIER)) {
