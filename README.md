@@ -1,10 +1,10 @@
 # SutechCompiler1400P2
 # project part2 ( lexer with parser )
-i implemente the ERRORHANDLE and parser and develope the lexer that produce in  project part1
+i implemente the ERRORHANDLE and parser and develope the lexer that produce in project part1
 in this project
 # display the:
 {
-Symbol table, Check all errors in one compile , pars decimal experssion 
+Symbol table, Check all errors in one compile , parse decimal experssion 
 }
 # chek errors:
 {
