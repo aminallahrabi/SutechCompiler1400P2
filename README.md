@@ -14,6 +14,6 @@ Assign , assign type , declare before use , {} , [] , () , ...
 }
 the symbol table update during the parsing.
 after the lexer find all tokens , pass the arraylist to Error Handler
-after Error handler shecl all the errors then set hasError true or false.
+after Error handler sheck all the errors then set hasError true or false.
 if the hasError was false then parser call it's constructor and call method parse for 
 showing the symbol table and update the variables.
