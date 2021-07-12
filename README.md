@@ -1,6 +1,8 @@
 # SutechCompiler1400P2
 # project part2 ( lexer with parser )
-i implemente the ERRORHANDLE and parser and develope the lexer that produce in project part1
+ implemente the ERRORHANDLE and parser and develope the lexer that produce in project part1.
+ develope the managment.java file and rename the file to errorHandler.
+ add some variable in lexer.java file.
 in this project
 # display the:
 {
