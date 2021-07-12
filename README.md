@@ -8,7 +8,7 @@ in this project
 {
 Symbol table, Check all errors in one compile , parse decimal experssion 
 }
-# chek errors:
+# check errors:
 {
 Assign , assign type , declare before use , {} , [] , () , ...
 }
