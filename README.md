@@ -2,7 +2,7 @@
 # project part2 ( lexer with parser )
  implemente the ERRORHANDLER and parser and develope the lexer that produce in project part1.
  develope the managment.java file and rename the file to errorHandler.
- add some variable in lexer.java file.
+ ADDed some variable in lexer.java file.
 in this project
 # display the:
 {
