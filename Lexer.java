@@ -26,6 +26,9 @@ public class Lexer {
     public static int bracketsC = 0;
     public static int angelbracketsC = 0;
 
+    public static ArrayList<Error> err;
+    ArrayList<Token> tokenize = new ArrayList<Token>();
+    
     Lexer(String fileName, String text) {
         this.fileName = fileName;
         this.text = text;
@@ -47,8 +50,9 @@ public class Lexer {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public ArrayList make_tokens() {
-        ArrayList<Token> tokenize = new ArrayList<Token>();
-        ArrayList<Error> err = new ArrayList<>();
+
+        
+        err = new ArrayList<>();
         while (currentChar != null) {
 
             if (this.currentChar.equals(" ") || this.currentChar.equals("\t")) {
@@ -59,13 +63,17 @@ public class Lexer {
                 tokenize.add(make_identifier());
             } else if (this.currentChar.equals("\"")) {
                 tokenize.add(make_string());
-            }
-//            else if(this.currentChar.equals(Tokens.T_BOOL)){
-//                tokenize.add(new Token(Tokens.T_BOOL,this.positions.copy()));
-//            }
-            else if (this.currentChar.equals("-")) {
+            } else if (this.currentChar.equals("\'")) {
+                tokenize.add(make_char());
+            } else if (this.currentChar.equals("-")) {
                 tokenize.add(make_minus_or_arrow());
-            } else if (this.currentChar.equals("/")) {
+                
+            }else if(this.currentChar.equals("&")){
+                tokenize.add(new Token(Tokens.T_AND,this.positions.copy()));
+                advance();
+                advance();
+            } 
+            else if (this.currentChar.equals("/")) {
                 Token div_or_comment = skip_comment();
                 if (div_or_comment != null) {
                     tokenize.add(div_or_comment);
@@ -129,11 +137,11 @@ public class Lexer {
                 tokenize.add(new Token(Tokens.T_RBRACKET, this.positions.copy()));
                 advance();
             } else {
-                advance();
                 String current = this.currentChar;
                 String index = String.valueOf(positions.index);
                 Error e = new Error();
                 err.add(e.IllegalCharError(index, positions, current));
+                advance();
             }
 
         }
@@ -179,6 +187,23 @@ public class Lexer {
         return new Token(Tokens.T_STRING, str, this.positions.copy());
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    public Token make_char() {
+        String str = "";
+        advance();
+        while (this.currentChar != null && (!this.currentChar.equals("\'"))) {
+            if ("\r\n".contains(this.currentChar)) {
+                advance(); // for skip from carriage return
+                advance(); // for skip from next line ("\n")
+            } else {
+                str += this.currentChar;
+                advance();
+            }
+        }
+        advance();
+        return new Token(Tokens.T_CHAR, str, this.positions.copy());
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
     public Token make_identifier() {
         String id_str = "";
@@ -188,11 +213,11 @@ public class Lexer {
             this.advance();
         }
         if (Tokens.KEYWORDS2.contains(id_str)) {
+ 
             TokenType = Tokens.T_KEYWORD;
-        }else if((Tokens.Boolean_literal_f.equals(id_str)) || (Tokens.Boolean_literal_t.equals(id_str))){
+        } else if ((Tokens.Boolean_literal_f.equals(id_str)) || (Tokens.Boolean_literal_t.equals(id_str))) {
             TokenType = Tokens.T_BOOL;
-        } 
-        else {
+        } else {
             TokenType = Tokens.T_IDENTIFIER;
         }
         return new Token(TokenType, id_str, positions.copy());
@@ -207,9 +232,9 @@ public class Lexer {
             return new Token(Tokens.T_ARROW, this.positions.copy());
         } else if (this.currentChar.equals("-")) {
             this.advance();
-            return new Token(Tokens.T_MINUSMINUS,"--", this.positions.copy());
+            return new Token(Tokens.T_MINUSMINUS, "--", this.positions.copy());
         } else {
-            return new Token(Tokens.T_MINUS,"-", this.positions.copy());
+            return new Token(Tokens.T_MINUS, "-", this.positions.copy());
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,7 +258,7 @@ public class Lexer {
             advance();
             tokType = Tokens.T_EE;
         }
-        return new Token(tokType,"=", this.positions.copy());
+        return new Token(tokType, "=", this.positions.copy());
     }
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -282,7 +307,7 @@ public class Lexer {
             }
             advance();
         } else {
-            return new Token(Tokens.T_DIV,"/", this.positions.copy());
+            return new Token(Tokens.T_DIV, "/", this.positions.copy());
         }
 
         return new Token(Tokens.T_COMMENT, this.positions.copy());
@@ -293,8 +318,8 @@ public class Lexer {
         advance();
         if (this.currentChar.equals("+")) {
             advance();
-            return new Token(Tokens.T_PLUSPLUS,"++", this.positions.copy());
+            return new Token(Tokens.T_PLUSPLUS, "++", this.positions.copy());
         }
-        return new Token(Tokens.T_PLUS,"+", this.positions.copy());
+        return new Token(Tokens.T_PLUS, "+", this.positions.copy());
     }
 }

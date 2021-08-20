@@ -14,6 +14,7 @@ public class Tokens {
     static String T_INT = "INTEGER";
     static String T_FLOAT = "FLOAT";
     static String T_STRING = "STRING";
+    static String T_CHAR = "CHAR";
     static String T_BOOL = "BOOL";
     static String T_IDENTIFIER = "IDENTIFIER";
     static String T_KEYWORD = "KEYWORD";
@@ -52,10 +53,11 @@ public class Tokens {
     static String LETTERS_DIGITS = LETTERS + digits;
     static String KEYWORDS[] = {
         "int",
+        "char",
         "float",
         "String",
         "double",
-        "Boolean",
+        "boolean",
         "long",
         "if",
         "elseif",

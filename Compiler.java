@@ -18,8 +18,9 @@ public class Compiler {
      */
     public static void main(String[] args) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("E:\\project\\JAVA-project\\compiler2\\test\\tests\\input4.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("E:\\project\\JAVA-project\\compiler2\\test\\tests\\7.txt"));
             int c;
+
             String text = "";
             while ((c = br.read()) != -1) {
                 char character = (char) c;          //converting integer to char
@@ -39,9 +40,23 @@ public class Compiler {
             out.println("*******************************************");
             out.println("**************     ERRORS      ************");
             out.println("*******************************************");
+            if (!Lexer.err.isEmpty()) {
+                out.println("**************     LEXER   ERRORS      ************");
+                for (int i = 0; i < Lexer.err.size(); i++) {
+                    if (!("\r\n").contains(Lexer.err.get(i).details)) {
+                        out.println(Lexer.err.get(i).details);
+                        out.println("------------------------------------------|");
+                    }
+                }
+            }
+            else {
+                out.println("! you have Error in your code !");
+            }
             ErrorHandler m = new ErrorHandler(t); //for manage the token that visited and call error handler
             m.manage();
             if (!ErrorHandler.hasError) {
+                out.println("**************     PARSER   ERRORS      ************");
+
                 out.println(" DOESN'T HAVE ERROR ;)      ");
                 out.println("------------------------------------------|");
                 Parser parse = new Parser(t);

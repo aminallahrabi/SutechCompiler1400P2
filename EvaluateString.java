@@ -41,11 +41,11 @@ public class EvaluateString {
 3. At this point the operator stack should be empty, and the value
    stack should have only one value in it, which is the final result.
      */
-    public static int evaluate(String expression) {
+    public float evaluate(String expression) {
         char[] tokens = expression.toCharArray();
 
         // Stack for numbers: 'values'
-        Stack<Integer> values = new Stack<Integer>();
+        Stack<Float> values = new Stack<Float>();
 
         // Stack for Operators: 'ops'
         Stack<Character> ops = new Stack<Character>();
@@ -61,18 +61,18 @@ public class EvaluateString {
             // Current token is a number,
             // push it to stack for numbers
             if (tokens[i] >= '0'
-                    && tokens[i] <= '9') {
+                    && tokens[i] <= '9' ) {
                 StringBuffer sbuf = new StringBuffer();
 
                 // There may be more than one
                 // digits in number
                 while (i < tokens.length
-                        && tokens[i] >= '0'
-                        && tokens[i] <= '9') {
+                        && (tokens[i] >= '0'
+                        && tokens[i] <= '9' ||  tokens[i]=='.')) {
                     sbuf.append(tokens[i++]);
                 }
-                out.println("stack values top:"+Integer.parseInt(sbuf.toString()));
-                values.push(Integer.parseInt(sbuf.toString()));
+                out.println("stack values top:"+Float.parseFloat(sbuf.toString()));
+                values.push(Float.parseFloat(sbuf.toString()));
 
                 // right now the i points to
                 // the character next to the digit,
@@ -146,8 +146,8 @@ public class EvaluateString {
     // A utility method to apply an
     // operator 'op' on operands 'a'
     // and 'b'. Return the result.
-    public static int applyOp(char op,
-            int b, int a) {
+    public static float applyOp(char op,
+            float b, float a) {
         switch (op) {
             case '+':
                 return a + b;
@@ -166,7 +166,7 @@ public class EvaluateString {
     }
 
     // Driver method to test above methods
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        System.out.println(EvaluateString.
 //                evaluate("10 + 2 * 3 - 1"));
 //        System.out.println(EvaluateString.
@@ -175,5 +175,5 @@ public class EvaluateString {
 //                evaluate("100 * ( 2 + 12 )"));
 //        System.out.println(EvaluateString.
 //                evaluate("100 * ( 2 + 12 ) / 14"));
-    }
+//    }
 }
